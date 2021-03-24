@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NSN",
+    "D@E",
+    "NSN"
+  ],
+  "key": {
+    "N": { "item": "minecraft:netherite_block" },
+    "S": { "item": "minecraft:nether_star" },
+    "E": { "item": "minecraft:elytra" },
+    "D": { "item": "minecraft:dragon_head" },
+    "@": { "item": "refinedstorage:crafter" }
+  },
+  "result": {
+    "item": "creativecrafter:creative_crafter",
+    "count": 1
+  }
+}
