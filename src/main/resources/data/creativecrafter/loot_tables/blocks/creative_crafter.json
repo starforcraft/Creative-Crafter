@@ -6,11 +6,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "creativecrafter:creative_crafter"
-            }
-          ],
           "name": "creativecrafter:creative_crafter"
         }
       ],
