@@ -1,14 +1,8 @@
 package com.YTrollman.CreativeCrafter.node;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
 import com.YTrollman.CreativeCrafter.CreativeCrafter;
 import com.YTrollman.CreativeCrafter.config.CreativeCrafterConfig;
+import com.refinedmods.refinedstorage.RSItems;
 import com.refinedmods.refinedstorage.api.autocrafting.ICraftingPattern;
 import com.refinedmods.refinedstorage.api.autocrafting.ICraftingPatternContainer;
 import com.refinedmods.refinedstorage.api.autocrafting.ICraftingPatternProvider;
@@ -20,9 +14,9 @@ import com.refinedmods.refinedstorage.apiimpl.network.node.NetworkNode;
 import com.refinedmods.refinedstorage.inventory.item.BaseItemHandler;
 import com.refinedmods.refinedstorage.inventory.item.validator.PatternItemValidator;
 import com.refinedmods.refinedstorage.inventory.listener.NetworkNodeInventoryListener;
+import com.refinedmods.refinedstorage.item.PatternItem;
 import com.refinedmods.refinedstorage.util.StackUtils;
 import com.refinedmods.refinedstorage.util.WorldUtils;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -38,6 +32,10 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
+
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CreativeCrafterNetworkNode extends NetworkNode implements ICraftingPatternContainer
 {
@@ -62,7 +60,7 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     private static final String NBT_LOCKED = "Locked";
     private static final String NBT_WAS_POWERED = "WasPowered";
 
-    private final BaseItemHandler patternsInventory = new BaseItemHandler(9)
+    private final BaseItemHandler patternsInventory = new BaseItemHandler(CreativeCrafter.SIZE)
         {
             @Override
             public int getSlotLimit(int slot)
@@ -77,16 +75,16 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
             if (!reading)
             {
                 if (!world.isClientSide)
-                    invalidate();
-                if (network != null)
-                    network.getCraftingManager().invalidate();
+                    invalidateSlot(slot);
+                invalidateNextTick = false;
             }
         });
 
-    private final List<ICraftingPattern> patterns = new ArrayList<>();
-    
+    private final ICraftingPattern[] patterns = new ICraftingPattern[patternsInventory.getSlots()];
+
     // Used to prevent infinite recursion on getRootContainer() when there's e.g. two crafters facing each other.
     private boolean visited = false;
+    private boolean invalidateNextTick = false;
 
     private CrafterMode mode = CrafterMode.IGNORE;
     private boolean locked = false;
@@ -99,31 +97,31 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     private UUID uuid = null;
 
     public static final ResourceLocation ID = new ResourceLocation(CreativeCrafter.MOD_ID, "creative_crafter");
-    
+
     private static final ITextComponent DEFAULT_NAME = new TranslationTextComponent("gui.creativecrafter.creative_crafter");
 
     public CreativeCrafterNetworkNode(World world, BlockPos pos)
     {
     	super(world, pos);
-        this.patternsInventory.setSize(12 * 9);
     }
 
     private void invalidate()
     {
-        patterns.clear();
+        for(int slot = 0; slot < patternsInventory.getSlots(); ++slot)
+            invalidateSlot(slot);
+    }
 
-        for(int i = 0; i < patternsInventory.getSlots(); ++i)
-        {
-            ItemStack patternStack = patternsInventory.getStackInSlot(i);
+    private void invalidateSlot(int slot)
+    {
+        patterns[slot] = null;
 
-            if(!patternStack.isEmpty())
-            {
-                ICraftingPattern pattern = ((ICraftingPatternProvider) patternStack.getItem()).create(world, patternStack, this);
+        ItemStack patternStack = patternsInventory.getStackInSlot(slot);
+        if (patternStack.isEmpty())
+            return;
 
-                if(pattern.isValid())
-                    patterns.add(pattern);
-            }
-        }
+        ICraftingPattern pattern = ((ICraftingPatternProvider) patternStack.getItem()).create(world, patternStack, this);
+        if(pattern.isValid())
+            patterns[slot] = pattern;
     }
 
     @Override
@@ -136,10 +134,14 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     public void update()
     {
         super.update();
-        
+
         if (ticks == 1)
+            invalidate();
+
+        if (invalidateNextTick)
         {
-            invalidate();	
+            invalidateNextTick = false;
+            network.getCraftingManager().invalidate();
         }
 
         if (mode == CrafterMode.PULSE_INSERTS_NEXT_SET && world.isLoaded(pos))
@@ -301,7 +303,9 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     @Override
     public List<ICraftingPattern> getPatterns()
     {
-        return patterns;
+        return Arrays.stream(patterns)
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
     }
 
     @Nullable
