@@ -76,7 +76,7 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
             {
                 if (!world.isClientSide)
                     invalidateSlot(slot);
-                invalidateNextTick = false;
+                invalidateNextTick = true;
             }
         });
 
