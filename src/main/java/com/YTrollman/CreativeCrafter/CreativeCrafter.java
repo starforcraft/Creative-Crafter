@@ -25,38 +25,18 @@ import net.minecraftforge.fml.loading.FMLPaths;
 public class CreativeCrafter {
     public static final String MOD_ID = "creativecrafter";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
-    
+
+    public static final int ROWS = 12;
+    public static final int SIZE = ROWS * 9;
+
     public CreativeCrafter() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEventHandler::init);
         });
-        
-        MinecraftForge.EVENT_BUS.register(this);
-        
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.client_config);
-        
-        RegistryHandler.init();
-        
         Config.loadConfig(Config.client_config, FMLPaths.CONFIGDIR.get().resolve("creativecrafter-client.toml").toString());
-        
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-    }
-
-    private void setup(final FMLCommonSetupEvent event)
-    {
-    	
-    }
-
-    private void doClientStuff(final FMLClientSetupEvent event) 
-    {
-    	
-    }
-
-    @SubscribeEvent
-    public void onServerStarting(FMLServerStartingEvent event) 
-    {
-    	
+        RegistryHandler.init();
     }
 }
