@@ -141,7 +141,8 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
         if (invalidateNextTick)
         {
             invalidateNextTick = false;
-            network.getCraftingManager().invalidate();
+            if (network != null)
+                network.getCraftingManager().invalidate();
         }
 
         if (mode == CrafterMode.PULSE_INSERTS_NEXT_SET && world.isLoaded(pos))
