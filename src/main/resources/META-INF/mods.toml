@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[34,)"
+loaderVersion="[36,)"
 license="MIT"
 issueTrackerURL="https://github.com/starforcraft/Creative-Crafter/issues/new/choose"
 [[mods]]
@@ -15,20 +15,20 @@ description="This mod adds a Creative Crafter."
 [[dependencies.creativecrafter]]
     modId="refinedstorage"
     mandatory=true
-    versionRange="[1.9,)"
+    versionRange="[1.9.10,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.creativecrafter]]
     modId="forge"
     mandatory=true
-    versionRange="[34.1.0,)"
+    versionRange="[36.1.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.creativecrafter]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16,)"
+    versionRange="[1.16.5,)"
     ordering="NONE"
     side="BOTH"
