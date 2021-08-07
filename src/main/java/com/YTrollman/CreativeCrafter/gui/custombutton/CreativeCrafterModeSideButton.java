@@ -30,6 +30,6 @@ public class CreativeCrafterModeSideButton extends SideButton
     @Override
     public String getTooltip()
     {
-        return I18n.get("sidebutton.refinedstorage.crafter_mode", new Object[0]) + "\n" + TextFormatting.GRAY + I18n.get("sidebutton.refinedstorage.crafter_mode." + CreativeCrafterTileEntity.MODE.getValue(), new Object[0]);
+        return I18n.get("sidebutton.refinedstorage.crafter_mode") + "\n" + TextFormatting.GRAY + I18n.get("sidebutton.refinedstorage.crafter_mode." + CreativeCrafterTileEntity.MODE.getValue());
     }
 }

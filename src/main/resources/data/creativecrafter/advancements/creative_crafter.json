@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "creativecrafter:creative_crafter"
+    },
+    "title": {
+      "translate": "advancements.creativecrafter.creative_crafter"
+    },
+    "description": {
+      "translate": "advancements.creativecrafter.creative_crafter.description"
+    }
+  },
+  "parent": "refinedstorage:autocrafting",
+  "criteria": {
+    "creative_crafter_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "creativecrafter:creative_crafter"
+          }
+        ]
+      }
+    }
+  }
+}

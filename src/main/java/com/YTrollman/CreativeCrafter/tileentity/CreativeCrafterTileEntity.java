@@ -34,6 +34,7 @@ public class CreativeCrafterTileEntity extends NetworkNodeTile<CreativeCrafterNe
     }
 
     @Override
+    @Nonnull
     public CreativeCrafterNetworkNode createNode(World world, BlockPos blockPos)
     {
         return new CreativeCrafterNetworkNode(world, blockPos);
@@ -41,11 +42,11 @@ public class CreativeCrafterTileEntity extends NetworkNodeTile<CreativeCrafterNe
 
     @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction direction)
-    {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            if(direction != null && !direction.equals(this.getNode().getDirection()))
-                return patternsCapability.cast();
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction direction) {
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && direction != null && !direction.equals(this.getNode().getDirection())) {
+            return patternsCapability.cast();
+        }
+
         return super.getCapability(cap, direction);
     }
 }
