@@ -6,7 +6,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.refinedmods.refinedstorage.screen.BaseScreen;
 import com.refinedmods.refinedstorage.screen.widget.sidebutton.SideButton;
 import com.refinedmods.refinedstorage.tile.data.TileDataManager;
-
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TextFormatting;
 

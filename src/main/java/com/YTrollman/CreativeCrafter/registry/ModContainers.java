@@ -3,7 +3,6 @@ package com.YTrollman.CreativeCrafter.registry;
 import com.YTrollman.CreativeCrafter.CreativeCrafter;
 import com.YTrollman.CreativeCrafter.container.CreativeCrafterContainer;
 import com.YTrollman.CreativeCrafter.tileentity.CreativeCrafterTileEntity;
-
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -24,6 +23,6 @@ public class ModContainers {
             CreativeCrafter.LOGGER.error("Wrong type of tile entity (expected CreativeCrafterTileEntity)!");
             return null;
         }
-        return new CreativeCrafterContainer(windowId, inv.player, (CreativeCrafterTileEntity) te);
+        return new CreativeCrafterContainer(((CreativeCrafterTileEntity) te).getNode(), windowId, inv.player, (CreativeCrafterTileEntity) te);
     }));
 }
