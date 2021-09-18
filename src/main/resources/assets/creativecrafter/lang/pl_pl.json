@@ -1,0 +1,11 @@
+{
+  "itemGroup.creativecrafter" : "Kreatywny przetwarzacz receptur",
+  "tooltip.creativecrafter.hold_shift": "Przytrzymaj lewy Shift po więcej informacji",
+  "tooltip.creativecrafter.speed": "Szybkość: ",
+  "tooltip.creativecrafter.slots": "Sloty: 108",
+  "tooltip.creativecrafter.rfconsume": "Zużycie energii: ",
+  "gui.creativecrafter.creative_crafter": "Kreatywny przetwarzacz receptur",
+  "block.creativecrafter.creative_crafter": "Kreatywny przetwarzacz receptur",
+  "advancements.creativecrafter.creative_crafter" : "Kreatywny przetwarzacz receptur",
+  "advancements.creativecrafter.creative_crafter.description" : "Prawie natychmiastowe przetwarzanie!"
+}
