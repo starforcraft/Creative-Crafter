@@ -1,9 +1,0 @@
-{
-  "required": true,
-  "package": "com.YTrollman.CreativeCrafter.mixin",
-  "compatibilityLevel": "JAVA_8",
-  "mixins": [
-	"MixinBaseContainer"
-  ],
-  "minVersion": "0.8"
-}

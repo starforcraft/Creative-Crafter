@@ -10,12 +10,14 @@ import com.refinedmods.refinedstorage.api.storage.cache.IStorageCacheListener;
 import com.refinedmods.refinedstorage.container.BaseContainer;
 import com.refinedmods.refinedstorage.container.slot.grid.CraftingGridSlot;
 import com.refinedmods.refinedstorage.screen.IScreenInfoProvider;
+import com.refinedmods.refinedstorage.tile.grid.portable.IPortableGrid;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SSetSlotPacket;
+import net.minecraftforge.items.SlotItemHandler;
 
 import java.util.Iterator;
 
@@ -43,7 +45,11 @@ public class CreativeCrafterContainer extends BaseContainer implements ICrafting
 
         this.transferManager.clearTransfers();
 
-        transferManager.setNotFoundHandler((slotIndex) -> {
+        for (int i = 0; i < tile.getNode().getPatternInventory().getSlots(); ++i) {
+            addSlot(new SlotItemHandler(tile.getNode().getPatternInventory(), i, 8 + (18 * i), 19));
+        }
+
+        /*transferManager.setNotFoundHandler((slotIndex) -> {
             if (!this.getPlayer().getCommandSenderWorld().isClientSide) {
                 Slot slot = this.slots.get(slotIndex);
 
@@ -63,7 +69,7 @@ public class CreativeCrafterContainer extends BaseContainer implements ICrafting
             }
 
             return ItemStack.EMPTY;
-        });
+        });*/
 
         addPlayerInventory(8, screenInfoProvider.getYPlayerInventory());
 

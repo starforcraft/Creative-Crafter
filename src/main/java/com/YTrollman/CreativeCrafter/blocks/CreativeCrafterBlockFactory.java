@@ -5,6 +5,7 @@ import com.YTrollman.CreativeCrafter.tileentity.CreativeCrafterTileEntity;
 import com.refinedmods.refinedstorage.api.network.grid.GridFactoryType;
 import com.refinedmods.refinedstorage.api.network.grid.IGrid;
 import com.refinedmods.refinedstorage.api.network.grid.IGridFactory;
+import com.refinedmods.refinedstorage.inventory.player.PlayerSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -19,7 +20,7 @@ public class CreativeCrafterBlockFactory implements IGridFactory {
 
     @Override
     @Nullable
-    public IGrid createFromStack(PlayerEntity player, ItemStack stack, int slotId) {
+    public IGrid createFromStack(PlayerEntity player, ItemStack stack, PlayerSlot slotId) {
         return null;
     }
 
@@ -29,7 +30,7 @@ public class CreativeCrafterBlockFactory implements IGridFactory {
         TileEntity tile = getRelevantTile(player.getCommandSenderWorld(), pos);
 
         if (tile instanceof CreativeCrafterTileEntity) {
-            return (IGrid) ((CreativeCrafterTileEntity) tile).getNode();
+            return ((CreativeCrafterTileEntity) tile).getNode();
         }
 
         return null;

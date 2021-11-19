@@ -15,14 +15,14 @@ description="This mod adds a Creative Crafter."
 [[dependencies.creativecrafter]]
     modId="refinedstorage"
     mandatory=true
-    versionRange="[1.9.10,)"
+    versionRange="[1.9.16,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.creativecrafter]]
     modId="forge"
     mandatory=true
-    versionRange="[36.1.0,)"
+    versionRange="[36.2.0,)"
     ordering="NONE"
     side="BOTH"
 
