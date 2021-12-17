@@ -3,7 +3,6 @@ package com.YTrollman.CreativeCrafter.init;
 import com.YTrollman.CreativeCrafter.container.CreativeCrafterContainer;
 import com.YTrollman.CreativeCrafter.gui.CreativeCrafterScreen;
 import com.YTrollman.CreativeCrafter.registry.ModContainers;
-import com.refinedmods.refinedstorage.api.network.grid.GridType;
 import com.refinedmods.refinedstorage.api.network.node.INetworkNode;
 import com.refinedmods.refinedstorage.apiimpl.API;
 import com.refinedmods.refinedstorage.apiimpl.network.node.CrafterNetworkNode;
@@ -20,13 +19,9 @@ public class ClientEventHandler {
     {
         ScreenManager.register(ModContainers.CREATIVE_CRAFTER_CONTAINER.get(), CreativeCrafterScreen::new);
 
-<<<<<<< HEAD
         API.instance().getNetworkNodeRegistry().add(CrafterNetworkNode.ID, (tag, world, pos) -> readAndReturn(tag, new CrafterNetworkNode(world, pos)));
 
-        /*API.instance().addPatternRenderHandler(pattern -> {
-=======
         API.instance().addPatternRenderHandler(pattern -> {
->>>>>>> parent of acbfd01 (WIP Infinite Slots)
             Container container = Minecraft.getInstance().player.containerMenu;
 
             if (container instanceof CreativeCrafterContainer) {

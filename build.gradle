@@ -50,15 +50,13 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-<<<<<<< HEAD
-            //jvmArg "-Dmixin.env.disableRefMap=true"
-=======
-	    //jvmArg "-Dmixin.env.disableRefMap=true"
->>>>>>> parent of cd7c598 (Still wip)
 
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
-	    properties 'mixin.env.disableRefMap': 'true'
+
+            // property 'mixin.env.disableRefMap', 'true'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
 
             mods {
                 creativecrafter {
@@ -69,15 +67,13 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-<<<<<<< HEAD
-            //jvmArg "-Dmixin.env.disableRefMap=true"
-=======
-	    //jvmArg "-Dmixin.env.disableRefMap=true"
->>>>>>> parent of cd7c598 (Still wip)
-	    
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
-	    properties 'mixin.env.disableRefMap': 'true'
+
+            // property 'mixin.env.disableRefMap', 'true'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
 
             mods {
                 creativecrafter {
@@ -89,15 +85,15 @@ minecraft {
         data {
             workingDirectory project.file('run')
 
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
 
-            // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-	    properties 'mixin.env.disableRefMap': 'true'
 
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'creativecrafter', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            // property 'mixin.env.disableRefMap', 'true'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+
+            args '--mod', 'cabletiers', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
                 creativecrafter {

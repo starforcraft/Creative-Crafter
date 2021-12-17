@@ -60,34 +60,25 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     private static final String NBT_LOCKED = "Locked";
     private static final String NBT_WAS_POWERED = "WasPowered";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    private boolean readingInventory;
-
-=======
->>>>>>> parent of cd7c598 (Still wip)
-    private final BaseItemHandler patternsInventory = new BaseItemHandler(100)
-=======
     private final BaseItemHandler patternsInventory = new BaseItemHandler(CreativeCrafter.SIZE)
->>>>>>> parent of acbfd01 (WIP Infinite Slots)
+    {
+        @Override
+        public int getSlotLimit(int slot)
         {
-            @Override
-            public int getSlotLimit(int slot)
-            {
-                return 1;
-            }
+            return 1;
         }
-        .addValidator(new PatternItemValidator(world))
-        .addListener(new NetworkNodeInventoryListener(this))
-        .addListener((handler, slot, reading) ->
-        {
-            if (!reading)
+    }
+            .addValidator(new PatternItemValidator(world))
+            .addListener(new NetworkNodeInventoryListener(this))
+            .addListener((handler, slot, reading) ->
             {
-                if (!world.isClientSide)
-                    invalidateSlot(slot);
-                invalidateNextTick = true;
-            }
-        });
+                if (!reading)
+                {
+                    if (!world.isClientSide)
+                        invalidateSlot(slot);
+                    invalidateNextTick = true;
+                }
+            });
 
     private final ICraftingPattern[] patterns = new ICraftingPattern[patternsInventory.getSlots()];
 
@@ -111,7 +102,7 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
 
     public CreativeCrafterNetworkNode(World world, BlockPos pos)
     {
-    	super(world, pos);
+        super(world, pos);
     }
 
     private void invalidate()
@@ -238,7 +229,7 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
         super.write(tag);
 
         StackUtils.writeItems(patternsInventory, 0, tag);
-        
+
         if (displayName != null) {
             tag.putString(NBT_DISPLAY_NAME, ITextComponent.Serializer.toJson(displayName));
         }
@@ -257,13 +248,13 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     @Override
     public int getUpdateInterval()
     {
-    	return 0;
+        return 0;
     }
 
     @Override
     public int getMaximumSuccessfulCraftingUpdates()
     {
-    	return CreativeCrafterConfig.CREATIVE_CRAFTER_SPEED.get();
+        return CreativeCrafterConfig.CREATIVE_CRAFTER_SPEED.get();
     }
 
     @Nullable
@@ -314,8 +305,8 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     public List<ICraftingPattern> getPatterns()
     {
         return Arrays.stream(patterns)
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList());
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
     @Nullable
@@ -463,214 +454,4 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
             markDirty();
         }
     }
-<<<<<<< HEAD
-
-    @Override
-    public void onSizeChanged(int size) {
-        TileDataManager.setParameter(CreativeCrafterTileEntity.SIZE, size);
-    }
-
-    @Override
-    public void onTabSelectionChanged(int tab) {
-        TileDataManager.setParameter(CreativeCrafterTileEntity.TAB_SELECTED, tab);
-    }
-
-    @Override
-    public void onTabPageChanged(int page) {
-        if (page >= 0 && page <= getTotalTabPages()) {
-            TileDataManager.setParameter(CreativeCrafterTileEntity.TAB_PAGE, page);
-        }
-    }
-
-    @Override
-    public List<IFilter> getFilters() {
-        return filters;
-    }
-
-    @Override
-    public List<IGridTab> getTabs() {
-        return tabs;
-    }
-
-    @Override
-    public IItemHandlerModifiable getFilter() {
-        return filter;
-    }
-
-    @Nullable
-    @Override
-    public CraftingInventory getCraftingMatrix() {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public CraftResultInventory getCraftingResult() {
-        return null;
-    }
-
-    @Override
-    public void onCraftingMatrixChanged() {
-
-    }
-
-    @Override
-    public void onCrafted(PlayerEntity playerEntity, @Nullable IStackList<ItemStack> iStackList, @Nullable IStackList<ItemStack> iStackList1) {
-
-    }
-
-    @Override
-    public void onClear(PlayerEntity playerEntity) {
-
-    }
-
-    @Override
-    public void onCraftedShift(PlayerEntity playerEntity) {
-
-    }
-
-    @Override
-    public void onRecipeTransfer(PlayerEntity playerEntity, ItemStack[][] itemStacks) {
-
-    }
-
-    @Override
-    public void onClosed(PlayerEntity playerEntity) {
-        // NO OP
-    }
-
-    @Override
-    public boolean isGridActive() {
-        BlockState state = world.getBlockState(pos);
-
-        if (state.getBlock() instanceof CreativeCrafterBlock) {
-            return state.getValue(NetworkNodeBlock.CONNECTED);
-        }
-
-        return false;
-    }
-
-    @Override
-    public int getSlotId() {
-        return -1;
-    }
-
-    @Override
-    public GridType getGridType() {
-        return GridType.NORMAL;
-    }
-
-    @Override
-    public IStorageCacheListener createListener(ServerPlayerEntity player) {
-        return new ItemGridStorageCacheListener(player, network);
-    }
-
-    @Nullable
-    @Override
-    public IStorageCache getStorageCache() {
-        if (network != null) {
-            return network.getItemStorageCache();
-        }
-
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public IItemGridHandler getItemHandler() {
-        return network != null ? network.getItemGridHandler() : null;
-    }
-
-    @Nullable
-    @Override
-    public IFluidGridHandler getFluidHandler() {
-        return network != null ? network.getFluidGridHandler() : null;
-    }
-
-    @Override
-    public ITextComponent getTitle() {
-        return new TranslationTextComponent("gui.creativecrafter.creative_crafter");
-    }
-
-    public int getViewType() {
-        return this.world.isClientSide ? CreativeCrafterTileEntity.VIEW_TYPE.getValue() : this.viewType;
-    }
-
-    public int getSortingDirection() {
-        return this.world.isClientSide ? CreativeCrafterTileEntity.SORTING_DIRECTION.getValue() : this.sortingDirection;
-    }
-
-    public int getSortingType() {
-        return this.world.isClientSide ? CreativeCrafterTileEntity.SORTING_TYPE.getValue() : this.sortingType;
-    }
-
-    public int getSearchBoxMode() {
-        return this.world.isClientSide ? CreativeCrafterTileEntity.SEARCH_BOX_MODE.getValue() : this.searchBoxMode;
-    }
-
-    public int getSize() {
-        return this.world.isClientSide ? CreativeCrafterTileEntity.SIZE.getValue() : this.size;
-    }
-
-    @Override
-    public void onViewTypeChanged(int type) {
-        TileDataManager.setParameter(CreativeCrafterTileEntity.VIEW_TYPE, type);
-    }
-
-    @Override
-    public void onSortingTypeChanged(int type) {
-        TileDataManager.setParameter(CreativeCrafterTileEntity.SORTING_TYPE, type);
-    }
-
-    @Override
-    public void onSortingDirectionChanged(int direction) {
-        TileDataManager.setParameter(CreativeCrafterTileEntity.SORTING_DIRECTION, direction);
-    }
-
-    @Override
-    public void onSearchBoxModeChanged(int searchBoxMode) {
-        TileDataManager.setParameter(CreativeCrafterTileEntity.SEARCH_BOX_MODE, searchBoxMode);
-    }
-
-    public int getTabSelected() {
-        return this.world.isClientSide ? CreativeCrafterTileEntity.TAB_SELECTED.getValue() : this.tabSelected;
-    }
-
-    public int getTabPage() {
-        return this.world.isClientSide ? CreativeCrafterTileEntity.TAB_PAGE.getValue() : Math.min(this.tabPage, this.getTotalTabPages());
-    }
-
-    public int getTotalTabPages() {
-        return (int)Math.floor(((float)Math.max(0, this.tabs.size() - 1) / 5.0F));
-    }
-
-    public void setViewType(int viewType) {
-        this.viewType = viewType;
-    }
-
-    public void setSortingDirection(int sortingDirection) {
-        this.sortingDirection = sortingDirection;
-    }
-
-    public void setSortingType(int sortingType) {
-        this.sortingType = sortingType;
-    }
-
-    public void setSearchBoxMode(int searchBoxMode) {
-        this.searchBoxMode = searchBoxMode;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public void setTabSelected(int tabSelected) {
-        this.tabSelected = tabSelected;
-    }
-
-    public void setTabPage(int page) {
-        this.tabPage = page;
-    }
-=======
->>>>>>> parent of acbfd01 (WIP Infinite Slots)
 }
