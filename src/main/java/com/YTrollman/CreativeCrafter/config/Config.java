@@ -15,7 +15,6 @@ public class Config {
 	private static final ForgeConfigSpec.Builder client_builder = new ForgeConfigSpec.Builder();
 	public static final ForgeConfigSpec client_config;
 	
-	
 	static
 	{
 		CreativeCrafterConfig.init(client_builder);

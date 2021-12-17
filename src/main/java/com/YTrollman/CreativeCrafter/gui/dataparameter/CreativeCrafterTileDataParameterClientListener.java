@@ -2,10 +2,10 @@ package com.YTrollman.CreativeCrafter.gui.dataparameter;
 
 import com.YTrollman.CreativeCrafter.gui.CreativeCrafterScreen;
 import com.YTrollman.CreativeCrafter.gui.custombutton.CreativeCrafterModeSideButton;
+import com.refinedmods.refinedstorage.blockentity.data.BlockEntitySynchronizationClientListener;
 import com.refinedmods.refinedstorage.screen.BaseScreen;
-import com.refinedmods.refinedstorage.tile.data.TileDataParameterClientListener;
 
-public class CreativeCrafterTileDataParameterClientListener implements TileDataParameterClientListener<Boolean>
+public class CreativeCrafterTileDataParameterClientListener implements BlockEntitySynchronizationClientListener<Boolean>
 {
     @Override
     public void onChanged(boolean initial, Boolean hasRoot)

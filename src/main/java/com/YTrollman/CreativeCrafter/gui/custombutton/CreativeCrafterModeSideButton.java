@@ -1,35 +1,34 @@
 package com.YTrollman.CreativeCrafter.gui.custombutton;
 
-import com.YTrollman.CreativeCrafter.container.CreativeCrafterContainer;
-import com.YTrollman.CreativeCrafter.tileentity.CreativeCrafterTileEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.YTrollman.CreativeCrafter.blockentity.CreativeCrafterBlockEntity;
+import com.YTrollman.CreativeCrafter.container.CreativeCrafterContainerMenu;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.refinedmods.refinedstorage.blockentity.data.BlockEntitySynchronizationManager;
 import com.refinedmods.refinedstorage.screen.BaseScreen;
 import com.refinedmods.refinedstorage.screen.widget.sidebutton.SideButton;
-import com.refinedmods.refinedstorage.tile.data.TileDataManager;
-
-import net.minecraft.client.resources.I18n;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.resources.language.I18n;
 
 public class CreativeCrafterModeSideButton extends SideButton
 {
-    public CreativeCrafterModeSideButton(BaseScreen<CreativeCrafterContainer> screen)
+    public CreativeCrafterModeSideButton(BaseScreen<CreativeCrafterContainerMenu> screen)
     {
         super(screen);
     }
 
     @Override
-    protected void renderButtonIcon(MatrixStack matrixStack, int x, int y)
+    protected void renderButtonIcon(PoseStack poseStack, int x, int y)
     {
-        this.screen.blit(matrixStack, x, y, CreativeCrafterTileEntity.MODE.getValue() * 16, 0, 16, 16);
+        this.screen.blit(poseStack, x, y, CreativeCrafterBlockEntity.MODE.getValue() * 16, 0, 16, 16);
     }
 
     public void onPress() {
-        TileDataManager.setParameter(CreativeCrafterTileEntity.MODE, CreativeCrafterTileEntity.MODE.getValue() + 1);
+        BlockEntitySynchronizationManager.setParameter(CreativeCrafterBlockEntity.MODE, CreativeCrafterBlockEntity.MODE.getValue() + 1);
     }
 
     @Override
     public String getTooltip()
     {
-        return I18n.get("sidebutton.refinedstorage.crafter_mode") + "\n" + TextFormatting.GRAY + I18n.get("sidebutton.refinedstorage.crafter_mode." + CreativeCrafterTileEntity.MODE.getValue());
+        return I18n.get("sidebutton.refinedstorage.crafter_mode") + "\n" + ChatFormatting.GRAY + I18n.get("sidebutton.refinedstorage.crafter_mode." + CreativeCrafterBlockEntity.MODE.getValue());
     }
 }

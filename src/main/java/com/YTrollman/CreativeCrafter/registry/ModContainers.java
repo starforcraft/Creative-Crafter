@@ -1,29 +1,28 @@
 package com.YTrollman.CreativeCrafter.registry;
 
 import com.YTrollman.CreativeCrafter.CreativeCrafter;
-import com.YTrollman.CreativeCrafter.container.CreativeCrafterContainer;
-import com.YTrollman.CreativeCrafter.tileentity.CreativeCrafterTileEntity;
-
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.extensions.IForgeContainerType;
-import net.minecraftforge.fml.RegistryObject;
+import com.YTrollman.CreativeCrafter.blockentity.CreativeCrafterBlockEntity;
+import com.YTrollman.CreativeCrafter.container.CreativeCrafterContainerMenu;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModContainers {
 
-    public static final DeferredRegister<ContainerType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, CreativeCrafter.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, CreativeCrafter.MOD_ID);
 
-    public static final RegistryObject<ContainerType<CreativeCrafterContainer>> CREATIVE_CRAFTER_CONTAINER = CONTAINER_TYPES.register("creative_crafter", () -> IForgeContainerType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<CreativeCrafterContainerMenu>> CREATIVE_CRAFTER_CONTAINER = CONTAINER_TYPES.register("creative_crafter", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
-        TileEntity te = inv.player.getCommandSenderWorld().getBlockEntity(pos);
-        if(!(te instanceof CreativeCrafterTileEntity))
+        BlockEntity te = inv.player.getCommandSenderWorld().getBlockEntity(pos);
+        if(!(te instanceof CreativeCrafterBlockEntity))
         {
-            CreativeCrafter.LOGGER.error("Wrong type of tile entity (expected CreativeCrafterTileEntity)!");
+            CreativeCrafter.LOGGER.error("Wrong type of tile entity (expected CreativeCrafterBlockEntity)!");
             return null;
         }
-        return new CreativeCrafterContainer(windowId, inv.player, (CreativeCrafterTileEntity) te);
+        return new CreativeCrafterContainerMenu(windowId, inv.player, (CreativeCrafterBlockEntity) te);
     }));
 }

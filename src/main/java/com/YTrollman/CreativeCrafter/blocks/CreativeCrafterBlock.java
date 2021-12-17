@@ -1,41 +1,39 @@
 package com.YTrollman.CreativeCrafter.blocks;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
+import com.YTrollman.CreativeCrafter.blockentity.CreativeCrafterBlockEntity;
 import com.YTrollman.CreativeCrafter.config.CreativeCrafterConfig;
-import com.YTrollman.CreativeCrafter.container.CreativeCrafterContainer;
-import com.YTrollman.CreativeCrafter.tileentity.CreativeCrafterTileEntity;
+import com.YTrollman.CreativeCrafter.container.CreativeCrafterContainerMenu;
 import com.YTrollman.CreativeCrafter.util.TooltipBuilder;
 import com.refinedmods.refinedstorage.api.network.security.Permission;
 import com.refinedmods.refinedstorage.block.BlockDirection;
 import com.refinedmods.refinedstorage.block.NetworkNodeBlock;
-import com.refinedmods.refinedstorage.container.factory.PositionalTileContainerProvider;
+import com.refinedmods.refinedstorage.container.factory.BlockEntityMenuProvider;
 import com.refinedmods.refinedstorage.util.BlockUtils;
 import com.refinedmods.refinedstorage.util.NetworkUtils;
-
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class CreativeCrafterBlock extends NetworkNodeBlock
 {
@@ -52,42 +50,42 @@ public class CreativeCrafterBlock extends NetworkNodeBlock
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world)
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
     {
-        return new CreativeCrafterTileEntity();
+        return new CreativeCrafterBlockEntity(pos, state);
     }
 
     @Override
-    public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
+    public void setPlacedBy(Level levelIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
     {
-        super.setPlacedBy(worldIn, pos, state, placer, stack);
-        if (!worldIn.isClientSide)
+        super.setPlacedBy(levelIn, pos, state, placer, stack);
+        if (!levelIn.isClientSide)
         {
-            TileEntity tile = worldIn.getBlockEntity(pos);
+            BlockEntity tile = levelIn.getBlockEntity(pos);
 
-            if (tile instanceof CreativeCrafterTileEntity && stack.hasCustomHoverName()) {
-                ((CreativeCrafterTileEntity) tile).getNode().setDisplayName(stack.getHoverName());
-                ((CreativeCrafterTileEntity) tile).getNode().markDirty();
+            if (tile instanceof CreativeCrafterBlockEntity && stack.hasCustomHoverName()) {
+                ((CreativeCrafterBlockEntity) tile).getNode().setDisplayName(stack.getHoverName());
+                ((CreativeCrafterBlockEntity) tile).getNode().markDirty();
             }
         }
     }
 
     @Override
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
+    public InteractionResult use(BlockState state, Level levelIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit)
     {
-        if (!worldIn.isClientSide)
+        if (!levelIn.isClientSide)
         {
-            return NetworkUtils.attempt(worldIn, pos, player, () -> NetworkHooks.openGui(
-                    (ServerPlayerEntity) player,
-                    new PositionalTileContainerProvider<CreativeCrafterTileEntity>(
-                            ((CreativeCrafterTileEntity) worldIn.getBlockEntity(pos)).getNode().getName(),
-                            (tile, windowId, inventory, p) -> new CreativeCrafterContainer(windowId, player, tile),
+            return NetworkUtils.attempt(levelIn, pos, player, () -> NetworkHooks.openGui(
+                    (ServerPlayer) player,
+                    new BlockEntityMenuProvider<CreativeCrafterBlockEntity>(
+                            ((CreativeCrafterBlockEntity) levelIn.getBlockEntity(pos)).getNode().getName(),
+                            (tile, windowId, inventory, p) -> new CreativeCrafterContainerMenu(windowId, player, tile),
                             pos
                     ),
                     pos
             ), Permission.MODIFY, Permission.AUTOCRAFTING);
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
@@ -98,19 +96,19 @@ public class CreativeCrafterBlock extends NetworkNodeBlock
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn)
     {
         if(Screen.hasShiftDown())
         {
             tooltip.addAll(new TooltipBuilder()
-            .addTip(I18n.get("tooltip.creativecrafter.speed") + CreativeCrafterConfig.CREATIVE_CRAFTER_SPEED.get() + " blocks per tick", TextFormatting.AQUA)
-            .addTip(I18n.get("tooltip.creativecrafter.slots"), TextFormatting.AQUA)
-            .addTip(I18n.get("tooltip.creativecrafter.rfconsume") + CreativeCrafterConfig.CREATIVE_CRAFTER_RF_CONSUME.get() + " RF", TextFormatting.AQUA)
+            .addTip(I18n.get("tooltip.creativecrafter.speed") + CreativeCrafterConfig.CREATIVE_CRAFTER_SPEED.get() + " blocks per tick", ChatFormatting.AQUA)
+            .addTip(I18n.get("tooltip.creativecrafter.slots"), ChatFormatting.AQUA)
+            .addTip(I18n.get("tooltip.creativecrafter.rfconsume") + CreativeCrafterConfig.CREATIVE_CRAFTER_RF_CONSUME.get() + " RF", ChatFormatting.AQUA)
             .build());
         }
         else
         {
-            tooltip.add(new TranslationTextComponent("tooltip.creativecrafter.hold_shift").withStyle(TextFormatting.YELLOW));
+            tooltip.add(new TranslatableComponent("tooltip.creativecrafter.hold_shift").withStyle(ChatFormatting.YELLOW));
         }
     }
 }

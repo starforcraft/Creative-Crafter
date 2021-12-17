@@ -1,17 +1,17 @@
 package com.YTrollman.CreativeCrafter.container;
 
 import com.YTrollman.CreativeCrafter.CreativeCrafter;
+import com.YTrollman.CreativeCrafter.blockentity.CreativeCrafterBlockEntity;
 import com.YTrollman.CreativeCrafter.registry.ModContainers;
-import com.YTrollman.CreativeCrafter.tileentity.CreativeCrafterTileEntity;
-import com.refinedmods.refinedstorage.container.BaseContainer;
-import net.minecraft.entity.player.PlayerEntity;
+import com.refinedmods.refinedstorage.container.BaseContainerMenu;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class CreativeCrafterContainer extends BaseContainer
+public class CreativeCrafterContainerMenu extends BaseContainerMenu
 {
-    private final CreativeCrafterTileEntity tile;
+    private final CreativeCrafterBlockEntity tile;
 
-    public CreativeCrafterContainer(int windowId, PlayerEntity player, CreativeCrafterTileEntity tile)
+    public CreativeCrafterContainerMenu(int windowId, Player player, CreativeCrafterBlockEntity tile)
     {
         super(ModContainers.CREATIVE_CRAFTER_CONTAINER.get(),tile, player, windowId);
         this.tile = tile;
@@ -22,11 +22,11 @@ public class CreativeCrafterContainer extends BaseContainer
 
         addPlayerInventory(8, 253);
 
-        transferManager.addBiTransfer(player.inventory, tile.getNode().getPatternItems());
+        transferManager.addBiTransfer(player.getInventory(), tile.getNode().getPatternItems());
     }
 
     @Override
-    public CreativeCrafterTileEntity getTile()
+    public CreativeCrafterBlockEntity getBlockEntity()
     {
         return tile;
     }
