@@ -1,13 +1,10 @@
 package com.YTrollman.CreativeCrafter.container;
 
+import com.YTrollman.CreativeCrafter.CreativeCrafter;
 import com.YTrollman.CreativeCrafter.registry.ModContainers;
 import com.YTrollman.CreativeCrafter.tileentity.CreativeCrafterTileEntity;
-import com.refinedmods.refinedstorage.api.network.grid.ICraftingGridListener;
-import com.refinedmods.refinedstorage.api.network.grid.IGrid;
-import com.refinedmods.refinedstorage.api.network.grid.handler.IItemGridHandler;
-import com.refinedmods.refinedstorage.api.storage.cache.IStorageCache;
-import com.refinedmods.refinedstorage.api.storage.cache.IStorageCacheListener;
 import com.refinedmods.refinedstorage.container.BaseContainer;
+<<<<<<< HEAD
 import com.refinedmods.refinedstorage.container.slot.grid.CraftingGridSlot;
 import com.refinedmods.refinedstorage.screen.IScreenInfoProvider;
 import com.refinedmods.refinedstorage.tile.grid.portable.IPortableGrid;
@@ -18,22 +15,21 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraftforge.items.SlotItemHandler;
+=======
+>>>>>>> parent of acbfd01 (WIP Infinite Slots)
 
-import java.util.Iterator;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.items.SlotItemHandler;
 
-public class CreativeCrafterContainer extends BaseContainer implements ICraftingGridListener
+public class CreativeCrafterContainer extends BaseContainer
 {
     private final CreativeCrafterTileEntity tile;
-    private IGrid grid;
-    private IStorageCache storageCache;
-    private IStorageCacheListener storageCacheListener;
-    private IScreenInfoProvider screenInfoProvider;
-    private PlayerEntity player;
 
-    public CreativeCrafterContainer(IGrid grid, int windowId, PlayerEntity player, CreativeCrafterTileEntity tile)
+    public CreativeCrafterContainer(int windowId, PlayerEntity player, CreativeCrafterTileEntity tile)
     {
-        super(ModContainers.CREATIVE_CRAFTER_CONTAINER.get(), tile, player, windowId);
+        super(ModContainers.CREATIVE_CRAFTER_CONTAINER.get(),tile, player, windowId);
         this.tile = tile;
+<<<<<<< HEAD
         this.grid = grid;
         this.player = player;
         grid.addCraftingListener(this);
@@ -72,7 +68,15 @@ public class CreativeCrafterContainer extends BaseContainer implements ICrafting
         });*/
 
         addPlayerInventory(8, screenInfoProvider.getYPlayerInventory());
+=======
 
+        for(int i = 0; i < CreativeCrafter.ROWS; i++)
+            for(int j = 0; j < 9; j++)
+                addSlot(new SlotItemHandler(tile.getNode().getPatternItems(), (i * 9) + j, 8 + (18 * j), 20 + (18 * i)));
+>>>>>>> parent of acbfd01 (WIP Infinite Slots)
+
+        addPlayerInventory(8, 253);
+        
         transferManager.addBiTransfer(player.inventory, tile.getNode().getPatternItems());
     }
 
@@ -80,71 +84,5 @@ public class CreativeCrafterContainer extends BaseContainer implements ICrafting
     public CreativeCrafterTileEntity getTile()
     {
         return tile;
-    }
-
-    public IScreenInfoProvider getScreenInfoProvider() {
-        return this.screenInfoProvider;
-    }
-
-    public void setScreenInfoProvider(IScreenInfoProvider screenInfoProvider) {
-        this.screenInfoProvider = screenInfoProvider;
-    }
-
-    public IGrid getGrid() {
-        return grid;
-    }
-
-    @Override
-    public void onCraftingMatrixChanged() {
-        for(int i = 0; i < this.slots.size(); ++i) {
-            Slot slot = this.slots.get(i);
-            if (slot instanceof CraftingGridSlot) {
-                Iterator var3 = this.containerListeners.iterator();
-
-                while(var3.hasNext()) {
-                    IContainerListener listener = (IContainerListener)var3.next();
-                    if (listener instanceof ServerPlayerEntity) {
-                        ((ServerPlayerEntity)listener).connection.send(new SSetSlotPacket(this.containerId, i, slot.getItem()));
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
-    public void broadcastChanges() {
-        if (!this.getPlayer().level.isClientSide) {
-            if (this.grid.getStorageCache() == null) {
-                if (this.storageCacheListener != null) {
-                    this.storageCache.removeListener(this.storageCacheListener);
-                    this.storageCacheListener = null;
-                    this.storageCache = null;
-                }
-            } else if (this.storageCacheListener == null) {
-                this.storageCacheListener = this.grid.createListener((ServerPlayerEntity)this.getPlayer());
-                this.storageCache = this.grid.getStorageCache();
-                this.storageCache.addListener(this.storageCacheListener);
-            }
-        }
-
-        super.broadcastChanges();
-    }
-
-    @Override
-    public void removed(PlayerEntity player) {
-        super.removed(player);
-        if (!player.getCommandSenderWorld().isClientSide) {
-            this.grid.onClosed(player);
-            if (this.storageCache != null && this.storageCacheListener != null) {
-                this.storageCache.removeListener(this.storageCacheListener);
-            }
-        }
-
-        this.grid.removeCraftingListener(this);
-    }
-
-    @Override
-    protected int getDisabledSlotNumber() {
-        return grid.getSlotId();
     }
 }

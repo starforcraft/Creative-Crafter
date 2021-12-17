@@ -1,40 +1,22 @@
 package com.YTrollman.CreativeCrafter.node;
 
 import com.YTrollman.CreativeCrafter.CreativeCrafter;
-import com.YTrollman.CreativeCrafter.blocks.CreativeCrafterBlock;
 import com.YTrollman.CreativeCrafter.config.CreativeCrafterConfig;
-import com.YTrollman.CreativeCrafter.tileentity.CreativeCrafterTileEntity;
+import com.refinedmods.refinedstorage.RSItems;
 import com.refinedmods.refinedstorage.api.autocrafting.ICraftingPattern;
 import com.refinedmods.refinedstorage.api.autocrafting.ICraftingPatternContainer;
 import com.refinedmods.refinedstorage.api.autocrafting.ICraftingPatternProvider;
 import com.refinedmods.refinedstorage.api.network.INetwork;
-import com.refinedmods.refinedstorage.api.network.grid.GridType;
-import com.refinedmods.refinedstorage.api.network.grid.IGrid;
-import com.refinedmods.refinedstorage.api.network.grid.IGridTab;
-import com.refinedmods.refinedstorage.api.network.grid.handler.IFluidGridHandler;
-import com.refinedmods.refinedstorage.api.network.grid.handler.IItemGridHandler;
 import com.refinedmods.refinedstorage.api.network.node.INetworkNode;
-import com.refinedmods.refinedstorage.api.storage.cache.IStorageCache;
-import com.refinedmods.refinedstorage.api.storage.cache.IStorageCacheListener;
-import com.refinedmods.refinedstorage.api.util.IFilter;
-import com.refinedmods.refinedstorage.api.util.IStackList;
 import com.refinedmods.refinedstorage.apiimpl.API;
 import com.refinedmods.refinedstorage.apiimpl.network.node.ConnectivityStateChangeCause;
 import com.refinedmods.refinedstorage.apiimpl.network.node.NetworkNode;
-import com.refinedmods.refinedstorage.apiimpl.storage.cache.listener.ItemGridStorageCacheListener;
-import com.refinedmods.refinedstorage.block.NetworkNodeBlock;
 import com.refinedmods.refinedstorage.inventory.item.BaseItemHandler;
-import com.refinedmods.refinedstorage.inventory.item.FilterItemHandler;
 import com.refinedmods.refinedstorage.inventory.item.validator.PatternItemValidator;
 import com.refinedmods.refinedstorage.inventory.listener.NetworkNodeInventoryListener;
-import com.refinedmods.refinedstorage.tile.data.TileDataManager;
+import com.refinedmods.refinedstorage.item.PatternItem;
 import com.refinedmods.refinedstorage.util.StackUtils;
 import com.refinedmods.refinedstorage.util.WorldUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -55,20 +37,8 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CreativeCrafterNetworkNode extends NetworkNode implements ICraftingPatternContainer, IGrid
+public class CreativeCrafterNetworkNode extends NetworkNode implements ICraftingPatternContainer
 {
-    private final List<IFilter> filters = new ArrayList<>();
-    private final List<IGridTab> tabs = new ArrayList<>();
-    private final FilterItemHandler filter = (FilterItemHandler) new FilterItemHandler(filters, tabs).addListener(new NetworkNodeInventoryListener(this));
-
-    private int viewType;
-    private int sortingDirection;
-    private int sortingType;
-    private int searchBoxMode;
-    private int size;
-    private int tabSelected;
-    private int tabPage;
-
     public enum CrafterMode
     {
         IGNORE,
@@ -90,9 +60,13 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     private static final String NBT_LOCKED = "Locked";
     private static final String NBT_WAS_POWERED = "WasPowered";
 
+<<<<<<< HEAD
     private boolean readingInventory;
 
     private final BaseItemHandler patternsInventory = new BaseItemHandler(100)
+=======
+    private final BaseItemHandler patternsInventory = new BaseItemHandler(CreativeCrafter.SIZE)
+>>>>>>> parent of acbfd01 (WIP Infinite Slots)
         {
             @Override
             public int getSlotLimit(int slot)
@@ -135,7 +109,6 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     public CreativeCrafterNetworkNode(World world, BlockPos pos)
     {
     	super(world, pos);
-        this.size = 0;
     }
 
     private void invalidate()
@@ -256,15 +229,6 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     }
 
     @Override
-    public void readConfiguration(CompoundNBT tag) {
-        super.readConfiguration(tag);
-
-        if (tag.contains("Size")) {
-            this.size = tag.getInt("Size");
-        }
-    }
-
-    @Override
     public ResourceLocation getId()
     {
         return ID;
@@ -290,13 +254,6 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
         tag.putBoolean(NBT_LOCKED, locked);
         tag.putBoolean(NBT_WAS_POWERED, wasPowered);
 
-        return tag;
-    }
-
-    @Override
-    public CompoundNBT writeConfiguration(CompoundNBT tag) {
-        super.writeConfiguration(tag);
-        tag.putInt("Size", this.size);
         return tag;
     }
 
@@ -492,7 +449,7 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     @Override
     public void unlock()
     {
-        locked = false;
+        locked=false;
     }
 
     @Override
@@ -509,6 +466,7 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
             markDirty();
         }
     }
+<<<<<<< HEAD
 
     @Override
     public void onSizeChanged(int size) {
@@ -718,4 +676,6 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     public void setTabPage(int page) {
         this.tabPage = page;
     }
+=======
+>>>>>>> parent of acbfd01 (WIP Infinite Slots)
 }

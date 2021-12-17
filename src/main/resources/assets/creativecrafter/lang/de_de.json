@@ -1,11 +1,10 @@
 {
-  "itemGroup.creativecrafter" : "Kreativer Fertigungseinheit",
   "tooltip.creativecrafter.hold_shift": "Halte LINKS SHIFT f�r Einzelheiten",
   "tooltip.creativecrafter.speed": "Schnelligkeit: ",
   "tooltip.creativecrafter.slots": "Slots: 108",
   "tooltip.creativecrafter.rfconsume": "Konsumiert: ",
-  "gui.creativecrafter.creative_crafter": "Kreative Fertigungseinheit",
-  "block.creativecrafter.creative_crafter": "Kreative Fertigungseinheit",
+  "gui.creativecrafter.creative_crafter": "Kreativer Fertigungseinheit",
+  "block.creativecrafter.creative_crafter": "Kreativer Fertigungseinheit",
   "advancements.creativecrafter.creative_crafter" : "Kreativer Fertigungseinheit",
   "advancements.creativecrafter.creative_crafter.description" : "Fast direkte Fertigung!"
 }

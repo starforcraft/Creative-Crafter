@@ -1,5 +1,9 @@
 package com.YTrollman.CreativeCrafter.blocks;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import com.YTrollman.CreativeCrafter.config.CreativeCrafterConfig;
 import com.YTrollman.CreativeCrafter.container.CreativeCrafterContainer;
 import com.YTrollman.CreativeCrafter.tileentity.CreativeCrafterTileEntity;
@@ -10,6 +14,7 @@ import com.refinedmods.refinedstorage.block.NetworkNodeBlock;
 import com.refinedmods.refinedstorage.container.factory.PositionalTileContainerProvider;
 import com.refinedmods.refinedstorage.util.BlockUtils;
 import com.refinedmods.refinedstorage.util.NetworkUtils;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
@@ -31,9 +36,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class CreativeCrafterBlock extends NetworkNodeBlock
 {
@@ -79,7 +81,7 @@ public class CreativeCrafterBlock extends NetworkNodeBlock
                     (ServerPlayerEntity) player,
                     new PositionalTileContainerProvider<CreativeCrafterTileEntity>(
                             ((CreativeCrafterTileEntity) worldIn.getBlockEntity(pos)).getNode().getName(),
-                            (tile, windowId, inventory, p) -> new CreativeCrafterContainer(tile.getNode(), windowId, player, tile),
+                            (tile, windowId, inventory, p) -> new CreativeCrafterContainer(windowId, player, tile),
                             pos
                     ),
                     pos
