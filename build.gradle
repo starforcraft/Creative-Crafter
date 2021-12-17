@@ -50,11 +50,15 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+<<<<<<< HEAD
             //jvmArg "-Dmixin.env.disableRefMap=true"
+=======
+	    //jvmArg "-Dmixin.env.disableRefMap=true"
+>>>>>>> parent of cd7c598 (Still wip)
 
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
-            properties 'mixin.env.disableRefMap': 'true'
+	    properties 'mixin.env.disableRefMap': 'true'
 
             mods {
                 creativecrafter {
@@ -65,11 +69,15 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+<<<<<<< HEAD
             //jvmArg "-Dmixin.env.disableRefMap=true"
+=======
+	    //jvmArg "-Dmixin.env.disableRefMap=true"
+>>>>>>> parent of cd7c598 (Still wip)
 	    
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
-            properties 'mixin.env.disableRefMap': 'true'
+	    properties 'mixin.env.disableRefMap': 'true'
 
             mods {
                 creativecrafter {
@@ -86,7 +94,7 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-            properties 'mixin.env.disableRefMap': 'true'
+	    properties 'mixin.env.disableRefMap': 'true'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             args '--mod', 'creativecrafter', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')

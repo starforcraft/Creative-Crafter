@@ -61,8 +61,11 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     private static final String NBT_WAS_POWERED = "WasPowered";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     private boolean readingInventory;
 
+=======
+>>>>>>> parent of cd7c598 (Still wip)
     private final BaseItemHandler patternsInventory = new BaseItemHandler(100)
 =======
     private final BaseItemHandler patternsInventory = new BaseItemHandler(CreativeCrafter.SIZE)
@@ -198,10 +201,7 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
     {
         super.read(tag);
 
-        readingInventory = true;
-
         StackUtils.readItems(patternsInventory, 0, tag);
-        StackUtils.readItems(filter, 1, tag);
 
         invalidate();
 
@@ -224,8 +224,6 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
         if (tag.contains(NBT_WAS_POWERED)) {
             wasPowered = tag.getBoolean(NBT_WAS_POWERED);
         }
-
-        readingInventory = false;
     }
 
     @Override
@@ -240,8 +238,7 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
         super.write(tag);
 
         StackUtils.writeItems(patternsInventory, 0, tag);
-        StackUtils.writeItems(filter, 1, tag);
-
+        
         if (displayName != null) {
             tag.putString(NBT_DISPLAY_NAME, ITextComponent.Serializer.toJson(displayName));
         }
@@ -514,9 +511,7 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
 
     @Override
     public void onCraftingMatrixChanged() {
-        if (!readingInventory) {
-            markDirty();
-        }
+
     }
 
     @Override
