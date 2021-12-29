@@ -13,8 +13,8 @@ import com.refinedmods.refinedstorage.apiimpl.network.node.NetworkNode;
 import com.refinedmods.refinedstorage.inventory.item.BaseItemHandler;
 import com.refinedmods.refinedstorage.inventory.item.validator.PatternItemValidator;
 import com.refinedmods.refinedstorage.inventory.listener.NetworkNodeInventoryListener;
+import com.refinedmods.refinedstorage.util.LevelUtils;
 import com.refinedmods.refinedstorage.util.StackUtils;
-import com.refinedmods.refinedstorage.util.WorldUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -263,7 +263,7 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
         if(proxy == null)
             return null;
 
-        return WorldUtils.getItemHandler(proxy.getFacingBlockEntity(), proxy.getDirection().getOpposite());
+        return LevelUtils.getItemHandler(proxy.getFacingBlockEntity(), proxy.getDirection().getOpposite());
     }
 
     @Nullable
@@ -274,7 +274,7 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
         if(proxy == null)
             return null;
 
-        return WorldUtils.getFluidHandler(proxy.getFacingBlockEntity(), proxy.getDirection().getOpposite());
+        return LevelUtils.getFluidHandler(proxy.getFacingBlockEntity(), proxy.getDirection().getOpposite());
     }
 
     @Nullable
