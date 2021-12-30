@@ -1,0 +1,11 @@
+{
+  "itemGroup.creativecrafter" : "리파인드 스토리지 크리에이티브 제작기",
+  "tooltip.creativecrafter.hold_shift": "자세한 내용을 보려면 왼쪽 Shift 키를 누르십시오.",
+  "tooltip.creativecrafter.speed": "속도: ",
+  "tooltip.creativecrafter.slots": "슬롯: 108",
+  "tooltip.creativecrafter.rfconsume": "소모량: ",
+  "gui.creativecrafter.creative_crafter": "크리에이티브 제작기",
+  "block.creativecrafter.creative_crafter": "크리에이티브 제작기",
+  "advancements.creativecrafter.creative_crafter" : "크리에이티브 제작기",
+  "advancements.creativecrafter.creative_crafter.description" : "거의 즉각적으로 제작됩니다!"
+}
