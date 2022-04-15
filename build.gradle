@@ -22,16 +22,11 @@ repositories {
         url = "https://modmaven.k-4u.nl"
     }
     maven {
+        name 'RS maven'
         url = uri("https://maven.pkg.github.com/refinedmods/refinedstorage")
-        /* As of december 2021, GitHub packages requires authentication.
-           The password below is a personal access token that has read access to the Refined Mods repos.
-           It can be reused in other projects.
-           See: https://github.community/t/download-from-github-package-registry-without-authentication/14407/38 and
-                https://github.community/t/download-from-github-package-registry-without-authentication/14407/44
-         */
         credentials {
             username = "anything"
-            password = "\u0067hp_pnP5hVDYXXhhXwe21IEkrUzGjquUJL0xjLzb"
+            password = "\u0067hp_oGjcDFCn8jeTzIj4Ke9pLoEVtpnZMP4VQgaX"
         }
     }
     maven {
@@ -43,7 +38,7 @@ repositories {
 }
 
 version = "${mod_version}"
-group = "com.YTrollman.CreativeCrafter" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "com.YTrollman.CreativeCrafter"
 archivesBaseName = "${modid}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -116,14 +111,13 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-    compileOnly fg.deobf("mezz.jei:jei-1.18.1:${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.18.1:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-1.18.2:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:${jei_version}")
 
     implementation fg.deobf("com.refinedmods:refinedstorage:${rs_version}") {
         transitive false
     }
-    //runtimeOnly fg.deobf("curse.maven:storagedrawers-223852:3180569")
-    //implementation fg.deobf("curse.maven:mekanism-268560:3206392")
+    implementation fg.deobf("curse.maven:mekanism-268560:3743835")
 }
 
 jar {
