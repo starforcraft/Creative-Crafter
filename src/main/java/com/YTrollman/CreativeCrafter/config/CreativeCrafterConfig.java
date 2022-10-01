@@ -9,13 +9,13 @@ public class CreativeCrafterConfig {
 
     public static void init(ForgeConfigSpec.Builder client) {
 
-            client.comment("Creative Crafter Options");
-            
-            CREATIVE_CRAFTER_RF_CONSUME = client
-            		.comment("\nCreative Crafter RF Consume")
-                    .defineInRange("creativecrafterrfconsume", 0, 0, 2147483647);
-            CREATIVE_CRAFTER_SPEED = client
-            		.comment("\nCreative Crafter Speed \nIf this Value is too high and you try to craft like 10.000.000 items the Game will lag :)")
-                    .defineInRange("creativecrafterspeed", 60000, 0, 2147483647);
+        client.comment("Creative Crafter Options");
+
+        CREATIVE_CRAFTER_RF_CONSUME = client
+                .comment("\nCreative Crafter RF Consume")
+                .defineInRange("creativecrafterrfconsume", 0, 0, 2147483647);
+        CREATIVE_CRAFTER_SPEED = client
+                .comment("\nCreative Crafter Speed \nIf this Value is too high and you try to craft like 10.000.000 items the Game will lag :)")
+                .defineInRange("creativecrafterspeed", 60000, 0, 2147483647);
     }
 }

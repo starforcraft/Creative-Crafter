@@ -15,7 +15,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -35,35 +34,29 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CreativeCrafterBlock extends NetworkNodeBlock
-{
-    public CreativeCrafterBlock()
-    {
+public class CreativeCrafterBlock extends NetworkNodeBlock {
+    public CreativeCrafterBlock() {
         super(BlockUtils.DEFAULT_ROCK_PROPERTIES);
     }
 
     @Override
-    public BlockDirection getDirection()
-    {
+    public BlockDirection getDirection() {
         return BlockDirection.ANY_FACE_PLAYER;
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
-    {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new CreativeCrafterBlockEntity(pos, state);
     }
 
     @Override
-    public void setPlacedBy(Level levelIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
-    {
+    public void setPlacedBy(Level levelIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(levelIn, pos, state, placer, stack);
-        if (!levelIn.isClientSide)
-        {
+        if(!levelIn.isClientSide) {
             BlockEntity tile = levelIn.getBlockEntity(pos);
 
-            if (tile instanceof CreativeCrafterBlockEntity && stack.hasCustomHoverName()) {
+            if(tile instanceof CreativeCrafterBlockEntity && stack.hasCustomHoverName()) {
                 ((CreativeCrafterBlockEntity) tile).getNode().setDisplayName(stack.getHoverName());
                 ((CreativeCrafterBlockEntity) tile).getNode().markDirty();
             }
@@ -71,11 +64,9 @@ public class CreativeCrafterBlock extends NetworkNodeBlock
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level levelIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit)
-    {
-        if (!levelIn.isClientSide)
-        {
-            return NetworkUtils.attempt(levelIn, pos, player, () -> NetworkHooks.openGui(
+    public InteractionResult use(BlockState state, Level levelIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if(!levelIn.isClientSide) {
+            return NetworkUtils.attempt(levelIn, pos, player, () -> NetworkHooks.openScreen(
                     (ServerPlayer) player,
                     new BlockEntityMenuProvider<CreativeCrafterBlockEntity>(
                             ((CreativeCrafterBlockEntity) levelIn.getBlockEntity(pos)).getNode().getName(),
@@ -89,26 +80,21 @@ public class CreativeCrafterBlock extends NetworkNodeBlock
     }
 
     @Override
-    public boolean hasConnectedState()
-    {
+    public boolean hasConnectedState() {
         return true;
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn)
-    {
-        if(Screen.hasShiftDown())
-        {
+    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        if(Screen.hasShiftDown()) {
             tooltip.addAll(new TooltipBuilder()
-            .addTip(I18n.get("tooltip.creativecrafter.speed") + CreativeCrafterConfig.CREATIVE_CRAFTER_SPEED.get() + " blocks per tick", ChatFormatting.AQUA)
-            .addTip(I18n.get("tooltip.creativecrafter.slots"), ChatFormatting.AQUA)
-            .addTip(I18n.get("tooltip.creativecrafter.rfconsume") + CreativeCrafterConfig.CREATIVE_CRAFTER_RF_CONSUME.get() + " RF", ChatFormatting.AQUA)
-            .build());
-        }
-        else
-        {
-            tooltip.add(new TranslatableComponent("tooltip.creativecrafter.hold_shift").withStyle(ChatFormatting.YELLOW));
+                    .addTip(I18n.get("tooltip.creativecrafter.speed") + CreativeCrafterConfig.CREATIVE_CRAFTER_SPEED.get() + " blocks per tick", ChatFormatting.AQUA)
+                    .addTip(I18n.get("tooltip.creativecrafter.slots"), ChatFormatting.AQUA)
+                    .addTip(I18n.get("tooltip.creativecrafter.rfconsume") + CreativeCrafterConfig.CREATIVE_CRAFTER_RF_CONSUME.get() + " RF", ChatFormatting.AQUA)
+                    .build());
+        } else {
+            tooltip.add(Component.translatable("tooltip.creativecrafter.hold_shift").withStyle(ChatFormatting.YELLOW));
         }
     }
 }

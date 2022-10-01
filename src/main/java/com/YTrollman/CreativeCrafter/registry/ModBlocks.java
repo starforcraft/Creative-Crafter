@@ -18,7 +18,7 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, CreativeCrafter.MOD_ID);
 
     public static final RegistryObject<CreativeCrafterBlock> CREATIVE_CRAFTER = BLOCKS.register("creative_crafter", () -> new CreativeCrafterBlock());
-    
+
     public static final CreativeModeTab CREATIVE_CRAFTER_GROUP = (new CreativeModeTab(CreativeCrafter.MOD_ID) {
 
         @Override

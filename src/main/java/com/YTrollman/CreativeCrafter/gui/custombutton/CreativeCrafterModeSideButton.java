@@ -9,16 +9,13 @@ import com.refinedmods.refinedstorage.screen.widget.sidebutton.SideButton;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 
-public class CreativeCrafterModeSideButton extends SideButton
-{
-    public CreativeCrafterModeSideButton(BaseScreen<CreativeCrafterContainerMenu> screen)
-    {
+public class CreativeCrafterModeSideButton extends SideButton {
+    public CreativeCrafterModeSideButton(BaseScreen<CreativeCrafterContainerMenu> screen) {
         super(screen);
     }
 
     @Override
-    protected void renderButtonIcon(PoseStack poseStack, int x, int y)
-    {
+    protected void renderButtonIcon(PoseStack poseStack, int x, int y) {
         this.screen.blit(poseStack, x, y, CreativeCrafterBlockEntity.MODE.getValue() * 16, 0, 16, 16);
     }
 
@@ -27,8 +24,7 @@ public class CreativeCrafterModeSideButton extends SideButton
     }
 
     @Override
-    public String getTooltip()
-    {
+    public String getTooltip() {
         return I18n.get("sidebutton.refinedstorage.crafter_mode") + "\n" + ChatFormatting.GRAY + I18n.get("sidebutton.refinedstorage.crafter_mode." + CreativeCrafterBlockEntity.MODE.getValue());
     }
 }

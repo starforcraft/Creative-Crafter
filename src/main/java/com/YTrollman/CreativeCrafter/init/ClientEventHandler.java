@@ -2,7 +2,7 @@ package com.YTrollman.CreativeCrafter.init;
 
 import com.YTrollman.CreativeCrafter.container.CreativeCrafterContainerMenu;
 import com.YTrollman.CreativeCrafter.gui.CreativeCrafterScreen;
-import com.YTrollman.CreativeCrafter.registry.ModContainers;
+import com.YTrollman.CreativeCrafter.registry.ModContainerMenus;
 import com.refinedmods.refinedstorage.api.network.node.INetworkNode;
 import com.refinedmods.refinedstorage.apiimpl.API;
 import com.refinedmods.refinedstorage.apiimpl.network.node.CrafterNetworkNode;
@@ -15,18 +15,17 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ClientEventHandler {
 
-    public static void init(final FMLClientSetupEvent event)
-    {
-        MenuScreens.register(ModContainers.CREATIVE_CRAFTER_CONTAINER.get(), CreativeCrafterScreen::new);
+    public static void init(final FMLClientSetupEvent event) {
+        MenuScreens.register(ModContainerMenus.CREATIVE_CRAFTER_CONTAINER.get(), CreativeCrafterScreen::new);
 
         API.instance().getNetworkNodeRegistry().add(CrafterNetworkNode.ID, (tag, world, pos) -> readAndReturn(tag, new CrafterNetworkNode(world, pos)));
 
         API.instance().addPatternRenderHandler(pattern -> {
             AbstractContainerMenu container = Minecraft.getInstance().player.containerMenu;
 
-            if (container instanceof CreativeCrafterContainerMenu) {
-                for (int i = 0; i < 108; ++i) {
-                    if (container.getSlot(i).getItem() == pattern) {
+            if(container instanceof CreativeCrafterContainerMenu) {
+                for(int i = 0; i < 108; ++i) {
+                    if(container.getSlot(i).getItem() == pattern) {
                         return true;
                     }
                 }

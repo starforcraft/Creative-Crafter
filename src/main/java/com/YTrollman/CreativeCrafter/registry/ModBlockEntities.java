@@ -7,11 +7,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-public class ModTileEntityTypes {
+public class ModBlockEntities {
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, CreativeCrafter.MOD_ID);
 
-    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, CreativeCrafter.MOD_ID);
-
-    public static final RegistryObject<BlockEntityType<CreativeCrafterBlockEntity>> CREATIVE_CRAFTER_TILE_ENTITY = TILE_ENTITY_TYPES.register("creative_crafter", () -> BlockEntityType.Builder
+    public static final RegistryObject<BlockEntityType<CreativeCrafterBlockEntity>> CREATIVE_CRAFTER_TILE_ENTITY = BLOCK_ENTITIES.register("creative_crafter", () -> BlockEntityType.Builder
             .of((pos, state) -> new CreativeCrafterBlockEntity(pos, state), ModBlocks.CREATIVE_CRAFTER.get())
             .build(null));
 }
