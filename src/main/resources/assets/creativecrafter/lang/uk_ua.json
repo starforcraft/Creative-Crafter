@@ -1,0 +1,11 @@
+{
+  "itemGroup.creativecrafter" : "Творчий Складальник",
+  "tooltip.creativecrafter.hold_shift": "Утримуйте LEFT SHIFT для опису",
+  "tooltip.creativecrafter.speed": "Швидкість: ",
+  "tooltip.creativecrafter.slots": "Слоти: 108",
+  "tooltip.creativecrafter.rfconsume": "Споживання: ",
+  "gui.creativecrafter.creative_crafter": "Творчий Складальник",
+  "block.creativecrafter.creative_crafter": "Творчий Складальник",
+  "advancements.creativecrafter.creative_crafter" : "Творчий Складальник",
+  "advancements.creativecrafter.creative_crafter.description" : "Майже миттєвий крафт!"
+}
