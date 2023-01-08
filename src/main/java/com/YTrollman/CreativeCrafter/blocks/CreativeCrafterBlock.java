@@ -89,7 +89,6 @@ public class CreativeCrafterBlock extends NetworkNodeBlock {
     public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         if(Screen.hasShiftDown()) {
             tooltip.addAll(new TooltipBuilder()
-                    .addTip(I18n.get("tooltip.creativecrafter.speed") + CreativeCrafterConfig.CREATIVE_CRAFTER_SPEED.get() + " blocks per tick", ChatFormatting.AQUA)
                     .addTip(I18n.get("tooltip.creativecrafter.slots"), ChatFormatting.AQUA)
                     .addTip(I18n.get("tooltip.creativecrafter.rfconsume") + CreativeCrafterConfig.CREATIVE_CRAFTER_RF_CONSUME.get() + " RF", ChatFormatting.AQUA)
                     .build());

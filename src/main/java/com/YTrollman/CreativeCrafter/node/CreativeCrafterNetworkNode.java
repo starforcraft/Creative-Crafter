@@ -224,7 +224,7 @@ public class CreativeCrafterNetworkNode extends NetworkNode implements ICrafting
 
     @Override
     public int getMaximumSuccessfulCraftingUpdates() {
-        return CreativeCrafterConfig.CREATIVE_CRAFTER_SPEED.get();
+        return 60000;
     }
 
     @Nullable

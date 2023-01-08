@@ -1,15 +1,18 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://repo.spongepowered.org/maven' }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
 
 repositories {
     maven {
@@ -51,6 +54,7 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+            arg "-mixin.config=creativecrafter.mixins.json"
 
             property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
@@ -67,6 +71,7 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+            arg "-mixin.config=creativecrafter.mixins.json"
 
             property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
@@ -83,6 +88,7 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
+            arg "-mixin.config=creativecrafter.mixins.json"
 
             property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
 
@@ -114,20 +120,27 @@ dependencies {
     }
 
     implementation fg.deobf("curse.maven:storagedrawers-223852:3884263")
+    implementation fg.deobf("curse.maven:allthecompressed-514045:4068231")
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 jar {
     manifest {
         attributes([
             "Specification-Title": "creativecrafter",
-            "Specification-Vendor": "creativecraftersareus",
+            "Specification-Vendor": "creativecrafter",
             "Specification-Version": "1",
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"creativecraftersareus",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            "Implementation-Vendor" :"creativecrafter",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConfigs": "${modid}.mixins.json"
         ])
     }
 }
 
-jar.finalizedBy('reobfJar') 
+jar.finalizedBy('reobfJar')
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
