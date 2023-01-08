@@ -1,11 +1,10 @@
 {
   "itemGroup.creativecrafter" : "Artesano Creativo",
   "tooltip.creativecrafter.hold_shift": "Mantenga Pulsada La Tecla Mayús A La Izquierda Para Ver Los Detalles",
-  "tooltip.creativecrafter.speed": "Velocidad: ",
   "tooltip.creativecrafter.slots": "Tragamonedas: 108",
   "tooltip.creativecrafter.rfconsume": "Consumir: ",
   "gui.creativecrafter.creative_crafter": "Artesano Creativo",
   "block.creativecrafter.creative_crafter": "Artesano Creativo",
   "advancements.creativecrafter.creative_crafter" : "Artesano Creativo",
-  "advancements.creativecrafter.creative_crafter.description" : "¡Elaboración Casi Instantánea!"
+  "advancements.creativecrafter.creative_crafter.description" : "¡Elaboración Instantánea!"
 }

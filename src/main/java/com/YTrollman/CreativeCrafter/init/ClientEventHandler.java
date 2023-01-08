@@ -15,8 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ClientEventHandler {
 
-    public static void init(final FMLClientSetupEvent event)
-    {
+    public static void init(final FMLClientSetupEvent event) {
         MenuScreens.register(ModContainers.CREATIVE_CRAFTER_CONTAINER.get(), CreativeCrafterScreen::new);
 
         API.instance().getNetworkNodeRegistry().add(CrafterNetworkNode.ID, (tag, world, pos) -> readAndReturn(tag, new CrafterNetworkNode(world, pos)));
@@ -24,9 +23,9 @@ public class ClientEventHandler {
         API.instance().addPatternRenderHandler(pattern -> {
             AbstractContainerMenu container = Minecraft.getInstance().player.containerMenu;
 
-            if (container instanceof CreativeCrafterContainerMenu) {
-                for (int i = 0; i < 108; ++i) {
-                    if (container.getSlot(i).getItem() == pattern) {
+            if(container instanceof CreativeCrafterContainerMenu) {
+                for(int i = 0; i < 108; ++i) {
+                    if(container.getSlot(i).getItem() == pattern) {
                         return true;
                     }
                 }

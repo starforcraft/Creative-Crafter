@@ -24,12 +24,10 @@ public class CreativeCrafter {
 
     public CreativeCrafter() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEventHandler::init);
-        });
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEventHandler::init));
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.client_config);
-        Config.loadConfig(Config.client_config, FMLPaths.CONFIGDIR.get().resolve("creativecrafter-client.toml").toString());
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.common_config);
+        Config.loadConfig(Config.common_config, FMLPaths.CONFIGDIR.get().resolve("creativecrafter-common.toml").toString());
         RegistryHandler.init();
     }
 }

@@ -18,32 +18,29 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class CreativeCrafterBlockEntity extends NetworkNodeBlockEntity<CreativeCrafterNetworkNode>
-{
+public class CreativeCrafterBlockEntity extends NetworkNodeBlockEntity<CreativeCrafterNetworkNode> {
     public static final BlockEntitySynchronizationParameter<Integer, CreativeCrafterBlockEntity> MODE = new BlockEntitySynchronizationParameter<>(EntityDataSerializers.INT, CreativeCrafterNetworkNode.CrafterMode.IGNORE.ordinal(), t -> t.getNode().getMode().ordinal(), (t, v) -> t.getNode().setMode(CreativeCrafterNetworkNode.CrafterMode.getById(v)));
     private static final BlockEntitySynchronizationParameter<Boolean, CreativeCrafterBlockEntity> HAS_ROOT = new BlockEntitySynchronizationParameter<>(EntityDataSerializers.BOOLEAN, false, t -> t.getNode().getRootContainerNotSelf().isPresent(), null, (t, v) -> new CreativeCrafterTileDataParameterClientListener().onChanged(t, v));
 
     private final LazyOptional<IItemHandler> patternsCapability = LazyOptional.of(() -> getNode().getPatternItems());
 
-    public CreativeCrafterBlockEntity(BlockPos pos, BlockState state)
-    {
+    public CreativeCrafterBlockEntity(BlockPos pos, BlockState state) {
         super(ModTileEntityTypes.CREATIVE_CRAFTER_TILE_ENTITY.get(), pos, state);
-        
+
         dataManager.addWatchedParameter(MODE);
         dataManager.addParameter(HAS_ROOT);
     }
 
     @Override
     @Nonnull
-    public CreativeCrafterNetworkNode createNode(Level level, BlockPos blockPos)
-    {
+    public CreativeCrafterNetworkNode createNode(Level level, BlockPos blockPos) {
         return new CreativeCrafterNetworkNode(level, blockPos);
     }
 
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction direction) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && direction != null && !direction.equals(this.getNode().getDirection())) {
+        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && direction != null && !direction.equals(this.getNode().getDirection())) {
             return patternsCapability.cast();
         }
 

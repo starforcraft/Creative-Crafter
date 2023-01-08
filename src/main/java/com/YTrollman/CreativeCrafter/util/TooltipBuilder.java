@@ -27,6 +27,7 @@ public class TooltipBuilder {
         tooltip.add(new TranslatableComponent(key).withStyle(formatting));
         return this;
     }
+
     public TooltipBuilder addTranslatableTip(String key) {
         tooltip.add(new TranslatableComponent(key));
         return this;
@@ -52,7 +53,7 @@ public class TooltipBuilder {
         return this;
     }
 
-    public List<Component> build(){
+    public List<Component> build() {
         return tooltip.isEmpty() ? null : tooltip;
     }
 }

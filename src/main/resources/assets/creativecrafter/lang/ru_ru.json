@@ -1,0 +1,10 @@
+{
+  "itemGroup.creativecrafter" : "Творческий Сборщик",
+  "tooltip.creativecrafter.hold_shift": "Удерживайте LEFT SHIFT для описания",
+  "tooltip.creativecrafter.slots": "Слоты: 108",
+  "tooltip.creativecrafter.rfconsume": "Потребление: ",
+  "gui.creativecrafter.creative_crafter": "Творческий Сборщик",
+  "block.creativecrafter.creative_crafter": "Творческий Сборщик",
+  "advancements.creativecrafter.creative_crafter" : "Творческий Сборщик",
+  "advancements.creativecrafter.creative_crafter.description" : "мгновенный крафт!"
+}

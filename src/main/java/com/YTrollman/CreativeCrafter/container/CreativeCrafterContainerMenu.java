@@ -7,13 +7,11 @@ import com.refinedmods.refinedstorage.container.BaseContainerMenu;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class CreativeCrafterContainerMenu extends BaseContainerMenu
-{
+public class CreativeCrafterContainerMenu extends BaseContainerMenu {
     private final CreativeCrafterBlockEntity tile;
 
-    public CreativeCrafterContainerMenu(int windowId, Player player, CreativeCrafterBlockEntity tile)
-    {
-        super(ModContainers.CREATIVE_CRAFTER_CONTAINER.get(),tile, player, windowId);
+    public CreativeCrafterContainerMenu(int windowId, Player player, CreativeCrafterBlockEntity tile) {
+        super(ModContainers.CREATIVE_CRAFTER_CONTAINER.get(), tile, player, windowId);
         this.tile = tile;
 
         for(int i = 0; i < CreativeCrafter.ROWS; i++)
@@ -26,8 +24,7 @@ public class CreativeCrafterContainerMenu extends BaseContainerMenu
     }
 
     @Override
-    public CreativeCrafterBlockEntity getBlockEntity()
-    {
+    public CreativeCrafterBlockEntity getBlockEntity() {
         return tile;
     }
 }

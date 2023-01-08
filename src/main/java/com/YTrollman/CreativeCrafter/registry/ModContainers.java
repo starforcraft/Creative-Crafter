@@ -18,8 +18,7 @@ public class ModContainers {
     public static final RegistryObject<MenuType<CreativeCrafterContainerMenu>> CREATIVE_CRAFTER_CONTAINER = CONTAINER_TYPES.register("creative_crafter", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         BlockEntity te = inv.player.getCommandSenderWorld().getBlockEntity(pos);
-        if(!(te instanceof CreativeCrafterBlockEntity))
-        {
+        if(!(te instanceof CreativeCrafterBlockEntity)) {
             CreativeCrafter.LOGGER.error("Wrong type of tile entity (expected CreativeCrafterBlockEntity)!");
             return null;
         }
