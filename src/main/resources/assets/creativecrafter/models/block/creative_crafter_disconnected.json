@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "creativecrafter:block/creative_crafter_side_disconnected",
+    "north": "creativecrafter:block/creative_crafter_side_disconnected",
+    "south": "creativecrafter:block/creative_crafter_side_disconnected",
+    "east": "creativecrafter:block/creative_crafter_side_disconnected",
+    "west": "creativecrafter:block/creative_crafter_side_disconnected",
+    "up": "creativecrafter:block/creative_crafter_top_disconnected",
+    "down": "creativecrafter:block/creative_crafter_bottom"
+  }
+}

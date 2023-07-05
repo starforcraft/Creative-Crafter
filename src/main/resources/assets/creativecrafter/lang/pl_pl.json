@@ -2,7 +2,7 @@
   "itemGroup.creativecrafter" : "Kreatywny przetwarzacz receptur",
   "tooltip.creativecrafter.hold_shift": "Przytrzymaj lewy Shift po więcej informacji",
   "tooltip.creativecrafter.slots": "Sloty: 108",
-  "tooltip.creativecrafter.rfconsume": "Zużycie energii: ",
+  "tooltip.creativecrafter.rfconsume": "Zużycie energii: %s RF",
   "gui.creativecrafter.creative_crafter": "Kreatywny przetwarzacz receptur",
   "block.creativecrafter.creative_crafter": "Kreatywny przetwarzacz receptur",
   "advancements.creativecrafter.creative_crafter" : "Kreatywny przetwarzacz receptur",

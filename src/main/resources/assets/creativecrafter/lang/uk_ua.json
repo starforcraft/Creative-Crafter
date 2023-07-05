@@ -2,7 +2,7 @@
   "itemGroup.creativecrafter" : "Творчий Складальник",
   "tooltip.creativecrafter.hold_shift": "Утримуйте LEFT SHIFT для опису",
   "tooltip.creativecrafter.slots": "Слоти: 108",
-  "tooltip.creativecrafter.rfconsume": "Споживання: ",
+  "tooltip.creativecrafter.rfconsume": "Споживання: %s RF",
   "gui.creativecrafter.creative_crafter": "Творчий Складальник",
   "block.creativecrafter.creative_crafter": "Творчий Складальник",
   "advancements.creativecrafter.creative_crafter" : "Творчий Складальник",

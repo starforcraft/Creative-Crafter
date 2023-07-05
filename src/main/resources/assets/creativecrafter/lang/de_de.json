@@ -2,7 +2,7 @@
   "itemGroup.creativecrafter" : "Kreativer Fertigungseinheit",
   "tooltip.creativecrafter.hold_shift": "Halte LINKS SHIFT für Einzelheiten",
   "tooltip.creativecrafter.slots": "Slots: 108",
-  "tooltip.creativecrafter.rfconsume": "Konsumiert: ",
+  "tooltip.creativecrafter.rfconsume": "Konsumiert: %s RF",
   "gui.creativecrafter.creative_crafter": "Kreativer Fertigungseinheit",
   "block.creativecrafter.creative_crafter": "Kreativer Fertigungseinheit",
   "advancements.creativecrafter.creative_crafter" : "Kreativer Fertigungseinheit",

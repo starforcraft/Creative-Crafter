@@ -2,7 +2,7 @@
     "itemGroup.creativecrafter" : "Criador Criativo",
     "tooltip.creativecrafter.hold_shift": "Segure SHIFT ESQUERDA para detalhes",
     "tooltip.creativecrafter.slots": "Slots: 108",
-    "tooltip.creativecrafter.rfconsume": "Consome: ",
+    "tooltip.creativecrafter.rfconsume": "Consome: %s RF",
     "gui.creativecrafter.creative_crafter": "Criador Criativo",
     "block.creativecrafter.creative_crafter": "Criador Criativo",
     "advancements.creativecrafter.creative_crafter" : "Criador Criativo",
