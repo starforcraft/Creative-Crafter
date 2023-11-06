@@ -7,9 +7,9 @@ public class CreativeCrafterConfig {
 
     public static void init(ForgeConfigSpec.Builder common) {
         common.push("Creative Crafter Options");
-        CREATIVE_CRAFTER_RF_CONSUME = common
-                .comment("\nCreative Crafter RF Consume")
-                .defineInRange("creativecrafterrfconsume", 0, 0, 2147483647);
+            CREATIVE_CRAFTER_RF_CONSUME = common
+                    .comment("\nThe energy used by the Creative Crafter")
+                    .defineInRange("creativeCrafterEnergyUsage", 0, 0, Integer.MAX_VALUE);
         common.pop();
 
         common.build();

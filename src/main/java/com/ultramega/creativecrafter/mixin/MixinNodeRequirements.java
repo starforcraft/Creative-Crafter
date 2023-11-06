@@ -1,23 +1,17 @@
 package com.ultramega.creativecrafter.mixin;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.refinedmods.refinedstorage.api.util.IStackList;
+import com.refinedmods.refinedstorage.api.util.StackListEntry;
+import com.refinedmods.refinedstorage.apiimpl.autocrafting.task.v6.node.NodeRequirements;
+import com.ultramega.creativecrafter.util.IMultipleRequirements;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.items.ItemHandlerHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-import com.ultramega.creativecrafter.util.IMultipleRequirements;
-import com.refinedmods.refinedstorage.api.util.IStackList;
-import com.refinedmods.refinedstorage.api.util.StackListEntry;
-import com.refinedmods.refinedstorage.apiimpl.autocrafting.task.v6.node.NodeRequirements;
-
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.ItemHandlerHelper;
+import java.util.*;
 
 @Mixin(NodeRequirements.class)
 public class MixinNodeRequirements implements IMultipleRequirements {
@@ -34,7 +28,7 @@ public class MixinNodeRequirements implements IMultipleRequirements {
 
     @Unique
     @Override
-    public List<ItemStack> getMultipleRequirementSets(boolean simulate, int numOfRequirements) {
+    public List<ItemStack> creativeCrafter$getMultipleRequirementSets(boolean simulate, int numOfRequirements) {
         List<ItemStack> cached = cachedSimulatedItemRequirementSet;
         if (simulate && cached != null) {
             return cached;
@@ -70,7 +64,7 @@ public class MixinNodeRequirements implements IMultipleRequirements {
                     }
                 }
             } else {
-                throw new IllegalStateException("Bad!");
+                return null;
             }
         }
 

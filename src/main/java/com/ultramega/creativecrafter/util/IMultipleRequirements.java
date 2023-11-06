@@ -1,9 +1,9 @@
 package com.ultramega.creativecrafter.util;
 
-import java.util.List;
-
 import net.minecraft.world.item.ItemStack;
 
+import java.util.List;
+
 public interface IMultipleRequirements {
-    List<ItemStack> getMultipleRequirementSets(boolean simulate, int numOfRequirements);
+    List<ItemStack> creativeCrafter$getMultipleRequirementSets(boolean simulate, int numOfRequirements);
 }

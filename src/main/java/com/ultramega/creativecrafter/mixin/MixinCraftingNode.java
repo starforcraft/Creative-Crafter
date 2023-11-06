@@ -1,7 +1,5 @@
 package com.ultramega.creativecrafter.mixin;
 
-import com.ultramega.creativecrafter.node.CreativeCrafterNetworkNode;
-import com.ultramega.creativecrafter.util.IMultipleRequirements;
 import com.refinedmods.refinedstorage.api.autocrafting.ICraftingPattern;
 import com.refinedmods.refinedstorage.api.autocrafting.ICraftingPatternContainer;
 import com.refinedmods.refinedstorage.api.network.INetwork;
@@ -12,10 +10,15 @@ import com.refinedmods.refinedstorage.apiimpl.autocrafting.task.v6.node.Crafting
 import com.refinedmods.refinedstorage.apiimpl.autocrafting.task.v6.node.Node;
 import com.refinedmods.refinedstorage.apiimpl.autocrafting.task.v6.node.NodeList;
 import com.refinedmods.refinedstorage.apiimpl.autocrafting.task.v6.node.NodeListener;
+import com.ultramega.creativecrafter.node.CreativeCrafterNetworkNode;
+import com.ultramega.creativecrafter.util.IMultipleRequirements;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -39,51 +42,39 @@ public abstract class MixinCraftingNode extends Node {
         var containers = network.getCraftingManager().getAllContainers(getPattern());
         var hasCreativeCrafter = containers.stream().anyMatch(CreativeCrafterNetworkNode.class::isInstance);
 
-        if(hasCreativeCrafter) {
+        if (hasCreativeCrafter) {
             ci.cancel();
 
-            for (ICraftingPatternContainer container : containers) {
-                int interval = container.getUpdateInterval();
-                if (interval < 0) {
-                    throw new IllegalStateException(container + " has an update interval of < 0");
+            var mRequirements = (IMultipleRequirements) requirements;
+
+            if (IoUtil.extractFromInternalItemStorage(mRequirements.creativeCrafter$getMultipleRequirementSets(true, getQuantity()), internalStorage, Action.SIMULATE) != null) {
+                List<ItemStack> requirementSet;
+                if (getQuantity() == 1) {
+                    requirementSet = requirements.getSingleItemRequirementSet(false);
+                } else {
+                    requirementSet = mRequirements.creativeCrafter$getMultipleRequirementSets(false, getQuantity());
                 }
 
-                if (interval == 0 || ticks % interval == 0) {
-                    var mRequirements = (IMultipleRequirements)requirements;
+                IoUtil.extractFromInternalItemStorage(requirementSet, internalStorage, Action.PERFORM);
 
-                    if (IoUtil.extractFromInternalItemStorage(mRequirements.getMultipleRequirementSets(true, quantity), internalStorage, Action.SIMULATE) != null) {
-                        List<ItemStack> requirementSet;
-                        if(quantity == 1) {
-                            requirementSet = requirements.getSingleItemRequirementSet(false);
-                        } else {
-                            requirementSet = mRequirements.getMultipleRequirementSets(false, quantity);
-                        }
+                ItemStack output = getPattern().getOutput(recipe, network.getLevel().registryAccess());
+                output.setCount(output.getCount() * getQuantity());
 
-                        IoUtil.extractFromInternalItemStorage(requirementSet, internalStorage, Action.PERFORM);
+                if (!isRoot()) {
+                    internalStorage.insert(output, output.getCount(), Action.PERFORM);
+                } else {
+                    ItemStack remainder = network.insertItem(output, output.getCount(), Action.PERFORM);
 
-                        ItemStack output = getPattern().getOutput(recipe, network.getLevel().registryAccess());
-                        output.setCount(output.getCount() * quantity);
-
-                        if (!isRoot()) {
-                            internalStorage.insert(output, output.getCount(), Action.PERFORM);
-                        } else {
-                            ItemStack remainder = network.insertItem(output, output.getCount(), Action.PERFORM);
-
-                            internalStorage.insert(remainder, remainder.getCount() * quantity, Action.PERFORM);
-                        }
-
-                        // Byproducts need to always be inserted in the internal storage for later reuse further in the task.
-                        // Regular outputs can be inserted into the network *IF* it's a root since it's *NOT* expected to be used later on.
-                        for (ItemStack byp : getPattern().getByproducts(recipe)) {
-                            internalStorage.insert(byp, byp.getCount(), Action.PERFORM);
-                        }
-
-                        listener.onAllDone(this);
-                        return;
-                    } else {
-                        break;
-                    }
+                    internalStorage.insert(remainder, remainder.getCount() * getQuantity(), Action.PERFORM);
                 }
+
+                // Byproducts need to always be inserted in the internal storage for later reuse further in the task.
+                // Regular outputs can be inserted into the network *IF* it's a root since it's *NOT* expected to be used later on.
+                for (ItemStack byp : getPattern().getByproducts(recipe)) {
+                    internalStorage.insert(byp, byp.getCount(), Action.PERFORM);
+                }
+
+                listener.onAllDone(this);
             }
         }
     }

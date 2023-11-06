@@ -1,12 +1,13 @@
 package com.ultramega.creativecrafter.blockentity;
 
+import com.refinedmods.refinedstorage.apiimpl.network.node.CrafterNetworkNode;
+import com.refinedmods.refinedstorage.blockentity.NetworkNodeBlockEntity;
+import com.refinedmods.refinedstorage.blockentity.data.BlockEntitySynchronizationParameter;
+import com.refinedmods.refinedstorage.blockentity.data.BlockEntitySynchronizationSpec;
 import com.ultramega.creativecrafter.CreativeCrafter;
 import com.ultramega.creativecrafter.gui.dataparameter.CreativeCrafterTileDataParameterClientListener;
 import com.ultramega.creativecrafter.node.CreativeCrafterNetworkNode;
 import com.ultramega.creativecrafter.registry.ModBlockEntities;
-import com.refinedmods.refinedstorage.blockentity.NetworkNodeBlockEntity;
-import com.refinedmods.refinedstorage.blockentity.data.BlockEntitySynchronizationParameter;
-import com.refinedmods.refinedstorage.blockentity.data.BlockEntitySynchronizationSpec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -22,7 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class CreativeCrafterBlockEntity extends NetworkNodeBlockEntity<CreativeCrafterNetworkNode> {
-    public static final BlockEntitySynchronizationParameter<Integer, CreativeCrafterBlockEntity> MODE = new BlockEntitySynchronizationParameter<>(new ResourceLocation(CreativeCrafter.MOD_ID, "creative_crafter_mode"), EntityDataSerializers.INT, CreativeCrafterNetworkNode.CrafterMode.IGNORE.ordinal(), t -> t.getNode().getMode().ordinal(), (t, v) -> t.getNode().setMode(CreativeCrafterNetworkNode.CrafterMode.getById(v)));
+    public static final BlockEntitySynchronizationParameter<Integer, CreativeCrafterBlockEntity> MODE = new BlockEntitySynchronizationParameter<>(new ResourceLocation(CreativeCrafter.MOD_ID, "creative_crafter_mode"), EntityDataSerializers.INT, CrafterNetworkNode.CrafterMode.IGNORE.ordinal(), t -> t.getNode().getMode().ordinal(), (t, v) -> t.getNode().setMode(CrafterNetworkNode.CrafterMode.getById(v)));
     private static final BlockEntitySynchronizationParameter<Boolean, CreativeCrafterBlockEntity> HAS_ROOT = new BlockEntitySynchronizationParameter<>(new ResourceLocation(CreativeCrafter.MOD_ID, "creative_crafter_has_root"), EntityDataSerializers.BOOLEAN, false, t -> t.getNode().getRootContainerNotSelf().isPresent(), null, (t, v) -> new CreativeCrafterTileDataParameterClientListener().onChanged(t, v));
 
     public static BlockEntitySynchronizationSpec SPEC = BlockEntitySynchronizationSpec.builder()
@@ -31,10 +32,10 @@ public class CreativeCrafterBlockEntity extends NetworkNodeBlockEntity<CreativeC
             .addParameter(HAS_ROOT)
             .build();
 
-    private final LazyOptional<IItemHandler> patternsCapability = LazyOptional.of(() -> getNode().getPatternItems());
+    private final LazyOptional<IItemHandler> patternsCapability = LazyOptional.of(() -> getNode().getPatternInventory());
 
     public CreativeCrafterBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.CREATIVE_CRAFTER_TILE_ENTITY.get(), pos, state, SPEC);
+        super(ModBlockEntities.CREATIVE_CRAFTER_TILE_ENTITY.get(), pos, state, SPEC, CreativeCrafterNetworkNode.class);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class CreativeCrafterBlockEntity extends NetworkNodeBlockEntity<CreativeC
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction direction) {
-        if(cap == ForgeCapabilities.ITEM_HANDLER && direction != null && !direction.equals(this.getNode().getDirection())) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER && direction != null && !direction.equals(this.getNode().getDirection())) {
             return patternsCapability.cast();
         }
 

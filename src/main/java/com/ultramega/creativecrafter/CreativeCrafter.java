@@ -1,9 +1,9 @@
 package com.ultramega.creativecrafter;
 
 import com.ultramega.creativecrafter.config.Config;
-import com.ultramega.creativecrafter.init.ClientEventHandler;
-import com.ultramega.creativecrafter.registry.ModSetup;
 import com.ultramega.creativecrafter.registry.RegistryHandler;
+import com.ultramega.creativecrafter.setup.ClientSetup;
+import com.ultramega.creativecrafter.setup.CommonSetup;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -23,11 +23,12 @@ public class CreativeCrafter {
     public static final int SIZE = ROWS * 9;
 
     public CreativeCrafter() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEventHandler::init));
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientSetup::new);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(CommonSetup::onCommonSetup);
+
+        RegistryHandler.init();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.common_config);
-        Config.loadConfig(Config.common_config, FMLPaths.CONFIGDIR.get().resolve("creativecrafter-common.toml").toString());
-        RegistryHandler.init();
+        Config.loadConfig(Config.common_config, FMLPaths.CONFIGDIR.get().resolve(CreativeCrafter.MOD_ID + "-common.toml").toString());
     }
 }

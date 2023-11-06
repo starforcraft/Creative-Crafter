@@ -1,7 +1,7 @@
 package com.ultramega.creativecrafter.registry;
 
-import com.ultramega.creativecrafter.CreativeCrafter;
 import com.refinedmods.refinedstorage.item.blockitem.BaseBlockItem;
+import com.ultramega.creativecrafter.CreativeCrafter;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
