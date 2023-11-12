@@ -9,20 +9,20 @@ displayName="Creative Crafter"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/creative-crafter"
 logoFile="example.png"
 credits="Thanks for downloading this mod."
-authors="YTrollman"
+authors="Ultramega"
 description="This mod adds a Creative Crafter."
 
 [[dependencies.creativecrafter]]
     modId="refinedstorage"
     mandatory=true
-    versionRange="[1.11.0,)"
+    versionRange="[1.11.7,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.creativecrafter]]
     modId="forge"
     mandatory=true
-    versionRange="[43.1.1,)"
+    versionRange="[43.2,)"
     ordering="NONE"
     side="BOTH"
 

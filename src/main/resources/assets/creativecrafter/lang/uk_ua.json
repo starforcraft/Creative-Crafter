@@ -1,10 +1,10 @@
 {
-  "itemGroup.creativecrafter" : "Творчий Складальник",
-  "tooltip.creativecrafter.hold_shift": "Утримуйте LEFT SHIFT для опису",
-  "tooltip.creativecrafter.slots": "Слоти: 108",
-  "tooltip.creativecrafter.rfconsume": "Споживання: ",
-  "gui.creativecrafter.creative_crafter": "Творчий Складальник",
-  "block.creativecrafter.creative_crafter": "Творчий Складальник",
-  "advancements.creativecrafter.creative_crafter" : "Творчий Складальник",
-  "advancements.creativecrafter.creative_crafter.description" : "миттєвий крафт!"
+  "itemGroup.creativecrafter" : "Creative Crafter",
+  "tooltip.creativecrafter.hold_shift": "Утримуйте лівий SHIFT для подробиць",
+  "tooltip.creativecrafter.slots": "Стоси: 108",
+  "tooltip.creativecrafter.rfconsume": "Споживає: %s RF",
+  "gui.creativecrafter.creative_crafter": "Творчий виготовлювач",
+  "block.creativecrafter.creative_crafter": "Творчий виготовлювач",
+  "advancements.creativecrafter.creative_crafter" : "Творчий виготовлювач",
+  "advancements.creativecrafter.creative_crafter.description" : "Миттєве виготовлення!"
 }

@@ -16,12 +16,8 @@ apply plugin: 'org.spongepowered.mixin'
 
 repositories {
     maven {
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
+        name = 'JEI'
+        url = "https://maven.blamejared.com/"
     }
     maven {
         name 'RS maven'
@@ -40,7 +36,7 @@ repositories {
 }
 
 version = "${mod_version}"
-group = "com.YTrollman.CreativeCrafter"
+group = "com.ultramega.creativecrafter"
 archivesBaseName = "${modid}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -48,8 +44,6 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
     mappings channel: "official", version: "${mc_version}"
-    
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
@@ -113,7 +107,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-    runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-forge:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
     implementation fg.deobf("com.refinedmods:refinedstorage:${rs_version}") {
         transitive false
@@ -141,6 +135,3 @@ jar {
 }
 
 jar.finalizedBy('reobfJar')
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
